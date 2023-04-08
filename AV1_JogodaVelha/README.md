@@ -36,6 +36,7 @@ problema de classificação:
 ### Dica de código do jogo da velha, baseado nos vídeos disponibilizados, com algumas otimizações
 Caso encontre dificuldade, siga nossa dica de código na .pythonfile/dica.py
 
+
 ## Comandos de inicio de projeto 
 * Criando maquina virtual:
 ```javascript

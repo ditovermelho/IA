@@ -1,30 +1,32 @@
-# Dependencias, se não insralado, digitar: pip install colorama
+# Código do Jogo da Velha baseado nos videos e na dica do professor
 
-# imports
+# Importes
+
 import os
 import random
 
-from colorama import Fore
+from colorama import Back, Fore, Style
 
-# Globais
 jogadas = 0
-quemJoga = 2
+quemJoga = 2  # 1 - CPU | 2 - Jogador
 maxJogadas = 9
+vit = "n"
 velha = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
 matrix = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-
-# funções principais
 
 
 def tela():
     global velha
-    global jogadas  # os.system("clear")
-
-    print(" 0 1 2")
+    global jogadas
+    os.system("cls")
+    print(Fore.CYAN + "----Jogo da Velha----" + Fore.RESET)
+#    print("\n")
+    print("     0    1    2")
     for i in range(3):
-        print(f"{i}: {velha[i][0]} | {velha[i][1]} | {velha[i][2]}")
+        print(f"{i}:  {velha[i][0]}  |  {velha[i][1]}  |  {velha[i][2]}")
         if i != 2:
-            print(" -----------")
+            print("    -------------")
+    print("\n")
     print("Jogadas: " + Fore.GREEN + str(jogadas) + Fore.RESET)
 
 
@@ -32,12 +34,12 @@ def jogadorJoga():
     global jogadas
     global quemJoga
     global maxJogadas
-    global velha
     global matrix
+
     if quemJoga == 2 and jogadas < maxJogadas:
+        l = int(input("Linha..: "))
+        c = int(input("Coluna.: "))
         try:
-            l = int(input("Linha..: "))
-            c = int(input("Coluna.: "))
             while velha[l][c] != " ":
                 l = int(input("Linha..: "))
                 c = int(input("Coluna.: "))
@@ -54,6 +56,7 @@ def cpuJoga():
     global jogadas
     global quemJoga
     global maxJogadas
+    global matrix
     if quemJoga == 1 and jogadas < maxJogadas:
         l = random.randrange(0, 3)
         c = random.randrange(0, 3)
@@ -66,19 +69,7 @@ def cpuJoga():
         jogadas += 1
 
 
-def redefinir():
-    global velha, matrix
-    global jogadas
-    global quemJoga
-    global maxJogadas
-    jogadas = 0
-    quemJoga = 2
-    maxJogadas = 9
-    velha = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
-    matrix = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-
-
-def verificador():
+def vericardor():
     # Principio é multiplicar uma matriz 1x3 e 3x3, e 3x3 3 3x1
     # cada multiplicação verificar se soma 3 ou -3,
     # dado que (velha e matrix) possuem valores equivalentes a: X = -1 e O = 1
@@ -101,7 +92,7 @@ def verificador():
         for j in range(1):
             soma = 0
             for k in range(3):
-                soma = soma + matrix[i][j]
+                soma = soma + matrix[i][k]
             if soma == -3:
                 return "X"
             if soma == 3:
@@ -116,14 +107,30 @@ def verificador():
         return "X"
     if matrix[0][2]+matrix[1][1]+matrix[2][0] == 3:
         return "O"
-
     return "n"
 
-# Por para rodar:
+
+def redefinir():
+    global velha, matrix
+    global jogadas
+    global quemJoga
+    global maxJogadas
+    global vit
+    vit = "n"
+    jogadas = 0
+    quemJoga = 2
+    maxJogadas = 9
+    velha = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
+    matrix = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 
 
 def run():
+    global vit
+    global jogadas
+    global maxJogadas
+
     jogarNovamente = "s"
+
     while jogarNovamente == "s":
         while True:
             tela()
@@ -131,15 +138,15 @@ def run():
             cpuJoga()
 
             tela()
-            vit = verificador()
+            vit = vericardor()
             if vit != "n" or jogadas >= maxJogadas:
                 break
         print(Fore.RED + "Fim de Jogo" + Fore.YELLOW)
         if vit == "X" or vit == "O":
-            print("Resultado: Jogador" + vit + " venceu")
+            print("Resultado: Jogador " + vit + " venceu")
         else:
             print("Resultado: Empate")
-        jogarNovamente = raw_input(
+        jogarNovamente = input(
             Fore.BLUE + "Jogar Novamente? [s/n]: " + Fore.RESET)
         redefinir()
 
