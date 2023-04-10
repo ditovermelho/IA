@@ -1,4 +1,4 @@
-# Código do Jogo da Velha baseado nos videos e na dica do professor
+# Código do Jogo da Velha baseado nos videos, na dica do professor
 
 # Importes
 
