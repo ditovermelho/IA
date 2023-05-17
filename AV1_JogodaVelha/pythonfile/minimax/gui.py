@@ -5,6 +5,7 @@ from func_jogo_da_velha import (criarBoard, fazMovimento, getInputValido,
                                 printBoard, verificaGanhador,
                                 verificaMovimento)
 from minimax import movimentoIA
+from salvar_board import carregar_board, converter_string, salvar_conteudo
 
 pygame.font.init()
 
@@ -71,6 +72,10 @@ def main():
         ganhador = verificaGanhador(board)
         redraw_window(win, board)
         pygame.display.update()
+
+    conteudo = carregar_board()
+    conteudo = converter_string(board)
+    salvar_conteudo(conteudo)
 
     while (True):
         for event in pygame.event.get():
